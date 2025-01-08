@@ -215,8 +215,9 @@ class OnPolicyAlgorithm(BaseAlgorithm):
                     # as we are sampling from an unbounded Gaussian distribution
                     clipped_actions = np.clip(actions, self.action_space.low, self.action_space.high)
 
+            callback.before_step(locals())
             new_obs, rewards, dones, infos = env.step(clipped_actions)
-
+            callback.after_step(locals())
             self.num_timesteps += env.num_envs
 
             # Give access to local variables
